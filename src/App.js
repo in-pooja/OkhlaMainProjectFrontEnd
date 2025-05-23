@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import MemberForm from './Componets/MemberForm';
+import MemberTable from './Componets/ShowMemberData';
+import PaymentForm from './Componets/PaymentSummary';
+import ReceiptTable from './Componets/ReceptTable';
+import Dashboard from './Componets/Desboard';
+// import PaymentForm1 from './Componets/PaymentForm1';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MemberForm />
+      <MemberTable />
+      <PaymentForm />
+      <ReceiptTable />
+      <Dashboard />
+      {/* <PaymentForm1 /> */}
     </div>
   );
 }
