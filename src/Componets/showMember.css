@@ -1,0 +1,7 @@
+.equal-width th,
+.equal-width td {
+  width: 150px;           /* ✅ adjust kar sakti ho based on content */
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;    /* ✅ ek hi line me rakhne ke liye */
+}

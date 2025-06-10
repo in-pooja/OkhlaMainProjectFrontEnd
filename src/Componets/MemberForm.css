@@ -1,0 +1,86 @@
+body {
+  background-color: #fbfdff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+
+}
+
+.container {
+  max-width: 380px; /* was 500px */
+  margin: auto;
+  padding: 8px;
+}
+
+.card {
+  border-radius: 12px;
+  border: none;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  border-radius: 12px 12px 0 0;
+  font-weight: bold;
+  background-color: #173a60;
+  color: white;
+  padding: 10px 15px;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.form-label {
+  font-weight: 500;
+  font-size: 11px; /* smaller */
+  margin-bottom: 2px;
+}
+
+.form-control {
+  background-color: #fff !important;
+  border: 1px solid #ccc !important;
+  border-radius: 6px;         /* was 4px */
+  padding: 8px 10px;          /* more padding */
+  font-size: 14px;            /* better readability */
+  height: 44px;               /* was 24px */
+  line-height: 1.4;
+  box-shadow: none;
+  color: black;
+  transition: border-color 0.2s ease;
+}
+
+
+.form-control:focus {
+  background-color: #fff !important;
+  border-color: #173a60 !important;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(23, 58, 96, 0.2);
+  border-radius: 6px; /* match input border */
+}
+
+
+.form-check-input {
+  transform: scale(0.9); /* slightly smaller checkbox */
+  margin-top: 2px;
+}
+
+.btn-success {
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.row-cols-md-2 > * {
+  margin-bottom: 6px;  /* tighter spacing between fields */
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  color: #173a60;
+}
