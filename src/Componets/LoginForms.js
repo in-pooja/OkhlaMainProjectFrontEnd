@@ -1,201 +1,239 @@
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-// import Swal from 'sweetalert2';
-// import './Login.css';
-
-// function LoginForms({ setIsLoggedIn }) {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const navigate = useNavigate();
-
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const res = await axios.post('http://localhost:5000/Ohkla/login', {
-//         username,
-//         password
-//       });
-
-//       if (res.data.success) {
-//         setIsLoggedIn(true);
-
-//         Swal.fire({
-//           icon: 'success',
-//           title: 'Login Successful!',
-//           text: 'Welcome to the Member Dashboard',
-//           confirmButtonColor: '#6e44ff',
-//         }).then(() => {
-//          navigate('/dashboard');
-
-//         });
-//       } else {
-//         Swal.fire({
-//           icon: 'error',
-//           title: 'Login Failed!',
-//           text: 'Invalid username or password.',
-//           confirmButtonColor: '#6e44ff',
-//         });
-//       }
-//     } catch (err) {
-//       console.error('Login error:', err);
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Login Error',
-//         text: 'Something went wrong. Try again later.',
-//         confirmButtonColor: '#6e44ff',
-//       });
-//     }
-//   };
-
-//   return (
-//     <div className="login-bg">
-//       <div className="login-box">
-//         <h2>Login</h2>
-//         <form onSubmit={handleLogin}>
-//           <div className="mb-3">
-//             <input
-//               type="text"
-//               placeholder="Username"
-//               className="form-control"
-//               value={username}
-//               onChange={(e) => setUsername(e.target.value)}
-//               required
-//             />
-//           </div>
-//           <div className="mb-4">
-//             <input
-//               type="password"
-//               placeholder="Password"
-//               className="form-control"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               required
-//             />
-//           </div>
-//           <button type="submit" className="btn btn-primary w-100">Login</button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default LoginForms;
 
 
 
+// import React, { useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import "./Login.css";
+// import Swal from "sweetalert2";
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import './Login.css';
+// const LoginForm = () => {
+//     const [email, setEmail] = useState("");
+//     const [password, setPassword] = useState("");
+//     const navigate = useNavigate();
 
-const LoginForms = ({ setIsLoggedIn }) => { // ✅ props added
-  const [isSignup, setIsSignup] = useState(false);
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    contactNumber: ''
-  });
+//     const handleLogin = async (e) => {
+//         e.preventDefault();
+//         try {
+//             const res = await axios.post("http://localhost:5000/Ohkla/login", {
+//                 email,
+//                 password,
+//             });
+//             const { user } = res.data;
+//             localStorage.setItem("role", user.role);
+//             localStorage.setItem("username", user.name);
+//             localStorage.setItem("email", email);
+//             localStorage.setItem("isLoggedIn", "true");
+//             setEmail("");
+//             setPassword("");
 
-  const navigate = useNavigate();
+//             Swal.fire({
+//                 icon: "success",
+//                 title: "Login Successful",
+//                 text: `Welcome ${user.name}!`,
+//                 timer: 2000,
+//                 showConfirmButton: false,
+//             });
 
-// ✅ make sure this is inside the component
+//             navigate("/dashboard");
+//         } catch (err) {
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Login Failed",
+//                 text: "Invalid email or password.",
+//             });
+//         }
+//     };
 
-  const toggleForm = () => {
-    setIsSignup(prev => !prev);
-    setFormData({
-      username: '',
-      email: '',
-      password: '',
-      contactNumber: ''
-    });
-  };
+//     const handleForgotPassword = async () => {
+//         if (!email) {
+//             Swal.fire({
+//                 icon: "info",
+//                 title: "Enter Email",
+//                 text: "Please enter your email to proceed.",
+//             });
+//             return;
+//         }
+//         try {
+//             const res = await axios.get(`http://localhost:5000/Ohkla/getRoleByEmail?Email=${email}`);
+//             const { role } = res.data;
+//             if (role === "admin") {
+//                 await axios.post("http://localhost:5000/Ohkla/send-otp", { email });
+//                 localStorage.setItem("resetEmail", email);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+//                 Swal.fire({
+//                     icon: "success",
+//                     title: "OTP Sent",
+//                     text: "OTP has been sent to your email.",
+//                     timer: 2000,
+//                     showConfirmButton: false,
+//                 });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+//                 navigate("/verify-otp");
+//             } else {
+//                 Swal.fire({
+//                     icon: "error",
+//                     title: "Access Denied",
+//                     text: "You are not allowed to reset the password.",
+//                 });
+//             }
+//         } catch (err) {
+//             Swal.fire({
+//                 icon: "error",
+//                 title: "Error",
+//                 text: "User not found or server error.",
+//             });
+//         }
+//     };
 
-    const url = isSignup
-      ? 'http://localhost:5000/Ohkla/signup'
-      : 'http://localhost:5000/Ohkla/login';
+//     return (
+//         <div className="login-container">
+//             <div className="login-card">
+//                 <h2 className="text-center mb-4">Login</h2>
+//                 <form onSubmit={handleLogin} autoComplete="off">
+//                     <div className="form-group">
+//                         <input
+//                             type="email"
+//                             className="form-input"
+//                             placeholder="Email"
+//                             value={email}
+//                             onChange={(e) => setEmail(e.target.value)}
+//                             required
+//                         />
+//                     </div>
+//                     <div className="form-group">
+//                         <input
+//                             type="password"
+//                             className="form-input"
+//                             placeholder="Password"
+//                             value={password}
+//                             onChange={(e) => setPassword(e.target.value)}
+//                             required
+//                         />
+//                     </div>
+//                     <button type="submit" className="login-btn">Login</button>
+//                     <button
+//                         type="button"
+//                         className="forgot-btn"
+//                         onClick={handleForgotPassword}
+//                     >
+//                         Forgot Password?
+//                     </button>
+//                 </form>
+//             </div>
+//         </div>
+//     );
+// };
 
-    const dataToSend = isSignup
-      ? formData
-      : { email: formData.email, password: formData.password };
+// export default LoginForm;
 
-    try {
-      const res = await axios.post(url, dataToSend);
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./Login.css"; // 👉 if your CSS is in a separate file
 
-     if (res.data.success) {
-  Swal.fire({
-    icon: 'success',
-    title: res.data.message,
-    showConfirmButton: false,
-    timer: 1500
-  }).then(() => {
-    if (!isSignup) {
-       console.log("username:"+res.data.username);
-       localStorage.setItem("username", res.data.username);
-      // ✅ change on this line for username
-      setIsLoggedIn(true); // ✅ Yeh line add karo
-      navigate('/dashboard');
-    } else {
-      toggleForm(); // After signup, go to login
-    }
-  });
-}
- else {
-        Swal.fire('Failed', res.data.message, 'error');
-      }
-    } catch (err) {
-      console.error(err);
-      Swal.fire('Error', 'Something went wrong', 'error');
-    }
-  };
+const LoginForm = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-  return (
-    <div className="login-bg">
-      <div className="login-box">
-        <h2>{isSignup ? 'Signup' : 'Login'}</h2>
-        <form onSubmit={handleSubmit}>
-          {isSignup && (
-            <>
-              <div className="mb-3">
-                <input type="text" name="username" placeholder="Username" className="form-control" value={formData.username} onChange={handleChange} required />
-              </div>
-              <div className="mb-3">
-                <input type="text" name="contactNumber" placeholder="Contact Number" className="form-control" value={formData.contactNumber} onChange={handleChange} required />
-              </div>
-            </>
-          )}
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError("");
 
-          <div className="mb-3">
-            <input type="email" name="email" placeholder="Email" className="form-control" value={formData.email} onChange={handleChange} required />
-          </div>
+        try {
+            const res = await axios.post("http://localhost:5000/Ohkla/login", {
+                email,
+                password,
+            });
 
-          <div className="mb-4">
-            <input type="password" name="password" placeholder="Password" className="form-control" value={formData.password} onChange={handleChange} required />
-          </div>
+            const { user } = res.data;
 
-          <button type="submit" className="btn btn-primary w-100">{isSignup ? 'Signup' : 'Login'}</button>
-        </form>
+            localStorage.setItem("role", user.role);
+            localStorage.setItem("username", user.name);
+            localStorage.setItem("email", email);
+            localStorage.setItem("isLoggedIn", "true");
 
-        <div className="mt-3 text-center">
-          <button className="btn btn-link"style={{ color: 'white' }} onClick={toggleForm}>
-            {isSignup ? 'Already have an account? Login' : 'Create New User'}
-          </button>
+            setEmail("");
+            setPassword("");
+
+            navigate("/dashboard");
+        } catch (err) {
+            setError("Invalid email or password.");
+        }
+    };
+
+    const handleForgotPassword = async () => {
+        if (!email) {
+            alert("Please enter your email to proceed.");
+            return;
+        }
+
+        try {
+            const res = await axios.get(`http://localhost:5000/Ohkla/getRoleByEmail?Email=${email}`);
+            const { role } = res.data;
+            if (role === "admin") {
+                await axios.post("http://localhost:5000/Ohkla/send-otp", { email });
+                localStorage.setItem("resetEmail", email);
+                navigate("/verify-otp");
+            } else {
+                alert("You are not allowed to forgot password.");
+            }
+        } catch (err) {
+            alert("User not found or server error.");
+        }
+    };
+
+    return (
+        <div className="login-container">
+            <div className="login-card">
+                <h3 className="text-center mb-4">Login</h3>
+
+                {error && <div className="error-alert">{error}</div>}
+
+                <form onSubmit={handleLogin} autoComplete="off" name="loginForm">
+                    <div className="form-group">
+                        <label></label>
+                        <input
+                            type="email"
+                            name="email"
+                            autoComplete="off"
+                            className="form-input"
+                            placeholder="Enter email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label></label>
+                        <input
+                            type="password"
+                            name="password"
+                            autoComplete="new-password"
+                            className="form-input"
+                            placeholder="Enter password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <button type="submit" className="login-btn">
+                            Login
+                        </button>
+                    </div>
+
+                    <button type="button" className="forgot-btn" onClick={handleForgotPassword}>
+                        Forgot Password?
+                    </button>
+                </form>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default LoginForms;
+export default LoginForm;

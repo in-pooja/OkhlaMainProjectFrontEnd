@@ -43,7 +43,7 @@ const AnnualPaymentsTable = () => {
             <div style={{ flex: 1, padding: '4px', marginLeft: '195px' }}>
                 <div className="card shadow-sm border-0 w-100">
                     <div className="card-header text-white" style={{ backgroundColor: '#173a60' }}>
-                        <h2 className="mb-0 text-center">📋 Annual Payment Records</h2>
+                        <h3 className="mb-0 text-center">📋 Annual Payment Records</h3>
                     </div>
 
                     <div className="card-body p-0">

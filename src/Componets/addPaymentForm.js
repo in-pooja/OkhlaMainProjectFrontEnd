@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './addPaymnet.css'
 
 const YearlyPaymentForm = () => {
     const [yearRange, setYearRange] = useState('');
@@ -80,17 +81,131 @@ const YearlyPaymentForm = () => {
         }
     };
 
-    return (
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-            <div className="card shadow p-4" style={{ width: '800px', borderRadius: '12px',maxWidth: '1000px', width: '100%',marginLeft: '100px' }}>
-                <h2 className="text-center mb-4 fw-bold text-white"style={{ backgroundColor: '#173a60' }}>➕ Add Yearly Payment</h2>
+//     return (
+//         <div className="d-flex justify-content-center bg-light py-5" style={{ minHeight: 'vh', marginLeft: '250px' }}>
+            
 
-                {message && <div className="alert alert-success text-center">{message}</div>}
-                {error && <div className="alert alert-danger text-center">{error}</div>}
+//      <div className="card shadow p-5" style={{
+//     width: '90%',
+//     maxWidth: '1200px',
+//     borderRadius: '16px',
+//     marginLeft: 'auto',
+//     marginRight: 'auto',
+//     backgroundColor: 'white'
+// }}>
+//       <h1 className="text-center mb-4 fw-bold text-white"style={{ backgroundColor: '#173a60' }}>➕ Add Yearly Payment</h1>
+          
+
+//                 {message && <div className="alert alert-success text-center">{message}</div>}
+//                 {error && <div className="alert alert-danger text-center">{error}</div>}
+
+//                 <form onSubmit={handleSubmit}>
+//                     <div className="mb-4">
+//                         <label className="form-label fw-semibold">Year Range</label>
+//                         <input
+//                             type="text"
+//                             className="form-control"
+//                             placeholder="e.g. 2024-2025"
+//                             value={yearRange}
+//                             onChange={(e) => setYearRange(e.target.value)}
+//                             required
+//                         />
+//                     </div>
+
+//                     {['Printer', 'Provider', 'MachineDealer', 'Publisher'].map((category) => (
+//                         <div className="mb-3" key={category}>
+//                             <div className="row">
+//                                 <div className="col-12 fw-semibold mb-1">{category}</div>
+//                                 <div className="col-md-6">
+//                                     <input
+//                                         type="number"
+//                                         className="form-control"
+//                                         name={category}
+//                                         placeholder={`${category} Payment`}
+//                                         value={payments[category]}
+//                                         onChange={(e) => handleInputChange(e, 'payment')}
+//                                         min="0"
+//                                         step="0.01"
+//                                         required
+//                                     />
+//                                 </div>
+//                                 <div className="col-md-6">
+//                                     <input
+//                                         type="number"
+//                                         className="form-control"
+//                                         name={category}
+//                                         placeholder={`${category} Registration`}
+//                                         value={registrations[category]}
+//                                         onChange={(e) => handleInputChange(e, 'registration')}
+//                                         min="0"
+//                                         step="0.01"
+//                                         required
+//                                     />
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     ))}
+
+//                    <button
+//     type="submit"
+//     className="btn btn-primary w-100 fw-bold mt-3"
+//     style={{
+//         fontSize: '1.1rem',
+//         padding: '10px',
+//         borderRadius: '8px',
+//         boxShadow: '0 4px 8px rgba(18, 44, 72, 0.4)',
+//         transition: 'background-color 0.3s ease'
+//     }}
+// >
+//     Save Payments
+// </button>
+
+//                 </form>
+//             </div>
+//         </div>
+//     );
+
+return (
+    <div
+        className="d-flex justify-content-center align-items-center bg-light"
+        style={{
+            height: '100vh',
+            marginLeft: '200px',
+            overflow: 'hidden',
+        }}
+    >
+        <div
+            className="card shadow-lg p-3"
+            style={{
+                width: '97%',
+                maxWidth: '1100px',
+                height: '90vh', // fix height
+                borderRadius: '16px',
+                backgroundColor: 'white',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}
+        >
+            <div>
+                <h1
+                    className="text-center fw-bold text-white mb-3"
+                    style={{
+                        backgroundColor: '#173a60',
+                        padding: '10px',
+                        borderRadius: '10px',
+                        fontSize: '1.4rem',
+                    }}
+                >
+                    ➕ Add Yearly Payment
+                </h1>
+
+                {message && <div className="alert alert-success text-center py-1">{message}</div>}
+                {error && <div className="alert alert-danger text-center py-1">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="form-label fw-semibold">Year Range</label>
+                    <div className="mb-3">
+                        <label className="form-label fw-semibold small">Year Range</label>
                         <input
                             type="text"
                             className="form-control"
@@ -98,14 +213,15 @@ const YearlyPaymentForm = () => {
                             value={yearRange}
                             onChange={(e) => setYearRange(e.target.value)}
                             required
+                            style={{ fontSize: '0.9rem', padding: '6px' }}
                         />
                     </div>
 
                     {['Printer', 'Provider', 'MachineDealer', 'Publisher'].map((category) => (
-                        <div className="mb-3" key={category}>
+                        <div className="mb-2" key={category}>
                             <div className="row">
-                                <div className="col-12 fw-semibold mb-1">{category}</div>
-                                <div className="col-md-6">
+                                <div className="col-12 fw-semibold mb-1 small">{category}</div>
+                                <div className="col-md-6 mb-1">
                                     <input
                                         type="number"
                                         className="form-control"
@@ -116,9 +232,10 @@ const YearlyPaymentForm = () => {
                                         min="0"
                                         step="0.01"
                                         required
+                                        style={{ fontSize: '0.85rem', padding: '6px' }}
                                     />
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-6 mb-1">
                                     <input
                                         type="number"
                                         className="form-control"
@@ -129,30 +246,33 @@ const YearlyPaymentForm = () => {
                                         min="0"
                                         step="0.01"
                                         required
+                                        style={{ fontSize: '0.85rem', padding: '6px' }}
                                     />
                                 </div>
                             </div>
                         </div>
                     ))}
-
-                   <button
-    type="submit"
-    className="btn btn-primary w-100 fw-bold mt-3"
-    style={{
-        fontSize: '1.1rem',
-        padding: '10px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(18, 44, 72, 0.4)',
-        transition: 'background-color 0.3s ease'
-    }}
->
-    Save Payments
-</button>
-
+ <div className="text-center mt-3">
+                    <button
+                        type="submit"
+                        className="btn btn-primary fw-bold"
+                        style={{
+                            fontSize: '0.9rem',
+                            padding: '6px 20px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 8px rgba(18, 44, 72, 0.3)',
+                            minWidth: '200px',
+                        }}
+                    >
+                        Save Payments
+                    </button>
+                </div>
                 </form>
             </div>
         </div>
-    );
+    </div>
+);
+
 };
 
 export default YearlyPaymentForm;

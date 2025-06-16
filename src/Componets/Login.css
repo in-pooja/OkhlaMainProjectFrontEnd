@@ -1,74 +1,77 @@
-/* Login.css - Glass Effect with Purple Sky Background */
-
-.login-bg {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #6e44ff, #b892ff);
- background-image: url('https://slidebazaar.com/wp-content/uploads/2024/08/Free-Professional-Background-PowerPoint-Template-dark-blue.jpg');
-
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+/* Gradient Background */
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-element.style{
-    padding: 0;
+/* Glass Effect Card */
+.login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    color: white;
 }
 
-.login-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px 30px;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: black;
-  width: 100%;
-  max-width: 400px;
+.form-group {
+    margin-bottom: 20px;
 }
 
-.login-box h2 {
-  color: #ffffff;
-  font-weight: bold;
-  margin-bottom: 30px;
-  text-align: center;
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    outline: none;
 }
 
-.form-control {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: black;
-  border: none;
-  padding: 10px;
-  border-radius: 10px;
-  width: 100%;
+.form-input::placeholder {
+    color: #ccc;
 }
 
-.form-control::placeholder {
-  color: #ddd;
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4b6cb7;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-.btn-primary {
-  background-color: #ffffff;
-  color: #6e44ff;
-  font-weight: bold;
-  border: none;
-  padding: 10px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+.login-btn:hover {
+    background-color: #3f5aa8;
 }
 
-.btn-primary:hover {
-  background-color: #e0e0e0;
-  color: #6e44ff;
-  transform: scale(1.02);
+.forgot-btn {
+    display: block;
+    margin: 15px auto 0;
+    background: none;
+    border: none;
+    color: #ccc;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .login-box {
-    padding: 30px 20px;
-  }
+.error-alert {
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 14px;
 }

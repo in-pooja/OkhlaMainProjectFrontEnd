@@ -509,11 +509,19 @@ const DashboardUI = () => {
   };
 
   return (
-    <div className="container mt-1" style={{ marginLeft: '185px' }}>
+    <div className="container" style={{ marginLeft: '195px' }}>
       {/* <h3 className="mb-0">Dashboard</h3> */}
-      <div className="card-header text-white" style={{ backgroundColor: '#173a60' }}>
-                    <h1 className="mb-2" style={{ textAlign: 'center' }}>📈 Dashboard</h1>
-                </div>
+      {/* <div className="card-header text-white" style={{ backgroundColor: '#173a60' }}>
+                    <h3 className="mb-2" style={{ textAlign: 'center' }}>📈 Dashboard</h3>
+                </div> */}
+
+                 <div className="card-header text-white" style={{ backgroundColor: '#173a60',height: '50px' , display: 'flex',
+    justifyContent: 'center', // horizontally center
+    alignItems: 'center',}}>
+        <h3 className="mb-0" style={{ textAlign: 'center' }}>
+         📈 Dashboard
+        </h3>
+      </div>
 
       <div className="row g-3 mb-4">
         <div className="col-md-4">

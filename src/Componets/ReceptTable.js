@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const PaymentReceiptTable = () => {
     const [receipts, setReceipts] = useState([]);
+      const [selectedReceipt, setSelectedReceipt] = useState(null);
 
     const [columnFilters, setColumnFilters] = useState({
         ReceiptNumber: '',
@@ -42,16 +43,40 @@ const PaymentReceiptTable = () => {
         }));
     };
 
-    return (
-        <div className="container" style={{marginLeft: '190px'}}>
+      const handleRowSelect = (receipt) => {
+        setSelectedReceipt(receipt);
+    };
+
+ const handlePrint = () => {
+  if (selectedReceipt) {
+    const receiptNo = selectedReceipt.ReceiptNumber;
+    window.open(
+      `http://localhost:5000/Ohkla/report/receipt?receiptNo=${receiptNo}`,
+      '_blank'
+    );
+  } else {
+    alert('Please select a receipt to print.');
+  }
+};
+
+
+     return (
+        <div className="container" style={{ marginLeft: '190px' }}>
             <div className="card shadow-sm rounded">
-                <div className="card-header text-white" style={{ backgroundColor: '#173a60' }}>
-                    <h2 className="mb-0 "style={{ textAlign: 'center' }}>🧾 Receipt Summary</h2>
+                <div className="card-header text-white d-flex justify-content-between align-items-center" style={{ backgroundColor: '#173a60' }}>
+                    <h3 className="mb-0" style={{ textAlign: 'center', flex: 1 }}>🧾 Receipt Summary</h3>
+                    <button
+                        className="btn btn-light btn-sm"
+                        onClick={handlePrint}
+                        style={{ whiteSpace: 'nowrap' }}
+                    >
+                        🖨️ Print Selected Receipt
+                    </button>
                 </div>
                 <div className="card-body p-0">
                     <div className="table-responsive">
                         <table className="table table-hover table-bordered mb-0">
-                            <thead  style={{ backgroundColor: '#e6f2ff' }}>
+                            <thead style={{ backgroundColor: '#e6f2ff' }}>
                                 <tr>
                                     <th>Receipt No</th>
                                     <th>Company Name</th>
@@ -89,7 +114,12 @@ const PaymentReceiptTable = () => {
                             <tbody>
                                 {filteredReceipts.length > 0 ? (
                                     filteredReceipts.map((receipt, index) => (
-                                        <tr key={index}>
+                                        <tr
+                                            key={index}
+                                            onClick={() => handleRowSelect(receipt)}
+                                            className={selectedReceipt?.ReceiptNumber === receipt.ReceiptNumber ? 'table-primary' : ''}
+                                            style={{ cursor: 'pointer' }}
+                                        >
                                             <td className="text-center">{receipt.ReceiptNumber}</td>
                                             <td>{receipt.CompanyName}</td>
                                             <td>{receipt.ReceiptDate?.slice(0, 10)}</td>

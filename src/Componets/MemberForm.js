@@ -38,42 +38,36 @@ const MemberForm = () => {
 //   });
 
     
-    
-
-    useEffect(() => {
-        const fetchYears = async () => {
-            try {
-                const res = await axios.get('http://localhost:5000/Ohkla/getYearRange');
-                if (res.data.years && res.data.years.length > 0) {
-                    setYears(res.data.years);
-                    setSelectedYear(res.data.years[0]); // default latest year
-
-                    //chages for autofield owner name
-                    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setFormData((prev) => ({
-        ...prev,
-        Owner: storedUsername,
-          RegistrationDate: getCurrentDate(),
-      }));
+ useEffect(() => {
+  const fetchYears = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/Ohkla/getYearRange');
+      if (res.data.years && res.data.years.length > 0) {
+        setYears(res.data.years);
+        setSelectedYear(res.data.years[0]); // default latest year
+      }
+    } catch (error) {
+      console.error('Error fetching years:', error);
     }
-                }
-            } catch (error) {
-                console.error('Error fetching years:', error);
-            }
-        };
-        fetchYears();
-    }, []);
+  };
+
+  // Call the API
+  fetchYears();
+
+  // Set Owner & RegistrationDate from localStorage
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
+
+  if (role === "admin" && username) {
+    setFormData((prev) => ({
+      ...prev,
+      Owner: username,
+      RegistrationDate: getCurrentDate(),
+    }));
+  }
+}, []);
 
     const handleChange = (e) => {
-        // const { name, value, type, checked } = e.target;
-
-        // setFormData({
-        //     ...formData,
-        //     [name]: type === 'checkbox' ? checked : value
-        // });
-
-        //new changes for auto fill owner name
         const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -125,9 +119,6 @@ const MemberForm = () => {
         if (!validate()) return;
 
         try {
-            // const response = await axios.post('http://localhost:5000/Ohkla/Member', formData);
-            // alert(response.data.message);
-
             const yearRes = await axios.get('http://localhost:5000/Ohkla/getYearRange');
             const years = yearRes.data.years;
 
@@ -136,10 +127,8 @@ const MemberForm = () => {
                 return;
             }
 
-            const latestYear = years[0]; // Pick latest year (assuming DESC order)
+            const latestYear = years[0];
             console.log("📅 Inserting AnnualPayment for Year:", latestYear);
-
-            // 3. Insert AnnualPayment for selected/latest year
             const paymentResponse = await axios.post('http://localhost:5000/Ohkla/insertAnnualPayments', formData);
 
             alert(paymentResponse.data.message);
@@ -179,13 +168,10 @@ const MemberForm = () => {
         { value: 'Commercial Printer', label: 'Commercial Printer' },
         { value: 'Screen Printer', label: 'Screen Printer' }
     ];
-
-
     return (
-
   <div style={{ flex: 1, padding: '0px', marginLeft: '200px' }}>
     <div className="card shadow" style={{ width: '100%', height: 'auto' }}>
-      <div className="card-header text-white" style={{ backgroundColor: '#173a60' }}>
+      <div className="card-header text-white" style={{ backgroundColor: '#173a60',height: '50px' }}>
         <h3 className="mb-0" style={{ textAlign: 'center' }}>
           👤➕ New Member Registration
         </h3>
@@ -194,38 +180,38 @@ const MemberForm = () => {
         <form onSubmit={handleSubmit} autoComplete="off">
                         <div className="row">
                             {/* Existing Fields */}
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label" required={true}>Member Name<span className="star">*</span></label>
-                                <input type="text" name="MemberName" className="form-control" value={formData.MemberName} onChange={handleChange} autoComplete="new-password" required={true} />
+                                <input type="text" name="MemberName" className="form-control custom-input" value={formData.MemberName} onChange={handleChange} autoComplete="new-password" required={true} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label" required={true}>Company Name<span className="star">*</span></label>
-                                <input type="text" name="CompanyName" className="form-control" autoComplete="new-password" value={formData.CompanyName} onChange={handleChange} required={true} />
+                                <input type="text" name="CompanyName" className="form-control custom-input" autoComplete="new-password" value={formData.CompanyName} onChange={handleChange} required={true} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label" required={true}>Contact Number <span className="star">*</span></label>
-                                <input type="text" name="ContactNumber" autoComplete="new-password" className={`form-control ${errors.ContactNumber ? 'is-invalid' : ''}`} value={formData.ContactNumber} onChange={handleChange} required={true} />
+                                <input type="text" name="ContactNumber" autoComplete="new-password" className={`form-control custom-input ${errors.ContactNumber ? 'is-invalid' : ''}`} value={formData.ContactNumber} onChange={handleChange} required={true} />
                                 {errors.ContactNumber && <div className="invalid-feedback">{errors.ContactNumber}</div>}
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label" required={true}>Email<span className="star">*</span></label>
-                                <input type="email" name="Email" className={`form-control ${errors.Email ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.Email} onChange={handleChange} required={true} />
+                                <input type="email" name="Email" className={`form-control custom-input ${errors.Email ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.Email} onChange={handleChange} required={true} />
                                 {errors.Email && <div className="invalid-feedback">{errors.Email}</div>}
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">GST Number</label>
-                                <input type="text" name="GSTNo" className={`form-control ${errors.GSTNo ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.GSTNo} onChange={handleChange} />
+                                <input type="text" name="GSTNo" className={`form-control custom-input ${errors.GSTNo ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.GSTNo} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">Udhyam Aadhar</label>
-                                <input type="text" name="UdhyamAadhar" className={`form-control ${errors.UdhyamAadhar ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.UdhyamAadhar} onChange={handleChange} />
+                                <input type="text" name="UdhyamAadhar" className={`form-control custom-input custom-input ${errors.UdhyamAadhar ? 'is-invalid' : ''}`} autoComplete="new-password" value={formData.UdhyamAadhar} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label" >Registration Date<span className="star">*</span></label>
                                      <input
         type="date"
         name="RegistrationDate"
-        className="form-control"
+        className="form-control custom-input"
         value={formData.RegistrationDate}
         autoComplete="new-password"
         onChange={handleChange}
@@ -233,33 +219,33 @@ const MemberForm = () => {
           readOnly
       />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">Member Since</label>
-                                <input type="text" name="MemberSince" className="form-control" autoComplete="new-password" value={formData.MemberSince} onChange={handleChange} />
+                                <input type="text" name="MemberSince" className="form-control custom-input" autoComplete="new-password" value={formData.MemberSince} onChange={handleChange} />
                             </div>
                             
 
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">Address Line 1</label>
-                                <input type="text" name="Address1" className="form-control" autoComplete="new-password" value={formData.Address1} onChange={handleChange} />
+                                <input type="text" name="Address1" className="form-control custom-input" autoComplete="new-password" value={formData.Address1} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">Address Line 2</label>
-                                <input type="text" name="Address2" className="form-control" autoComplete="new-password" value={formData.Address2} onChange={handleChange} />
+                                <input type="text" name="Address2" className="form-control custom-input" autoComplete="new-password" value={formData.Address2} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">Area</label>
-                                <input type="text" name="Area" className="form-control" autoComplete="new-password" value={formData.Area} onChange={handleChange} />
+                                <input type="text" name="Area" className="form-control custom-input" autoComplete="new-password" value={formData.Area} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">City</label>
-                                <input type="text" name="City" className="form-control" autoComplete="new-password" value={formData.City} onChange={handleChange} />
+                                <input type="text" name="City" className="form-control custom-input" autoComplete="new-password" value={formData.City} onChange={handleChange} />
                             </div>
-                            <div className="col-md-4 mb-4">
+                            <div className="col-md-6 mb-3">
                                 <label className="form-label">State/UT <span className="star">*</span></label>
                                 <select
                                     name="State"
-                                    className="form-control"
+                                    className="form-control custom-input"
                                     value={formData.State}
                                     onChange={handleChange}
                                     required={true}
@@ -316,7 +302,7 @@ const MemberForm = () => {
                             {/* Category Dropdown */}
                             <div className="col-md-6 mb-3">
                                 <label className="form-label">Category<span className="star">*</span></label>
-                                <select name="Category" className="form-control" value={formData.Category} onChange={handleChange} required={true}>
+                                <select name="Category" className="form-control custom-input" value={formData.Category} onChange={handleChange} required={true}>
                                     <option value="">Select Category</option>
                                     <option value="Printer">Printer</option>
                                     <option value="Provider">Provider</option>
@@ -327,13 +313,13 @@ const MemberForm = () => {
 
                             {/* Printer Category Multi Select */}
                             {formData.Category === 'Printer' && (
-                                <div className="col-md-6 mb-4">
+                                <div className="col-md-6 mb-3">
                                     <label className="form-label">Printer Category</label>
                                     <Select
                                         isMulti
                                         name="PrinterCategory"
                                         options={printerCategoryOptions}
-                                        className="basic-multi-select"
+                                        className="basic-multi-select custom-input"
                                         classNamePrefix="select"
                                         onChange={handlePrinterCategoryChange}
                                         value={printerCategoryOptions.filter(option => formData.PrinterCategory.includes(option.value))}
@@ -341,28 +327,42 @@ const MemberForm = () => {
                                 </div>
                             )}
 
-                            <div className="col-md-4 mb-4 form-check mt-4">
-                                <input type="checkbox" name="IsActive" className="form-check-input" autoComplete="new-password" checked={formData.IsActive} onChange={handleChange} />
-                                <label className="form-check-label">Active</label>
-                            </div>
-                           
-                            {/* <div className="col-md-4 mb-4">
-                                <label className="form-label">Owner<span className="star">*</span></label>
-                                <input type="text" name="Owner" className="form-control" autoComplete="new-password" value={formData.Owner} onChange={handleChange} required={true} />
-                            </div> */}
-                           
+                          {/* Owner Field First */}
+<div className="col-md-4 mb-3">
+  <label className="form-label">
+    Owner <span className="text-danger">*</span>
+  </label>
+  <input
+    type="text"
+    name="Owner"
+    className="form-control custom-input"
+    autoComplete="new-password"
+    value={formData.Owner}
+    onChange={handleChange}
+    required
+  />
+</div>
 
-                            <input
-        type="text"
-        name="Owner"
-        className="form-control"
-        autoComplete="new-password"
-        value={formData.Owner}
-        onChange={handleChange}
-        required={true}
-      />
+{/* Active Checkbox After Owner */}
+<div className="col-md-4 mb-3 form-check d-flex align-items-center mt-4">
+  <input
+    type="checkbox"
+    name="IsActive"
+    className="form-check-input me-2 custom-input"
+    autoComplete="new-password"
+    checked={formData.IsActive}
+    onChange={handleChange}
+    id="IsActiveCheckbox"
+  />
+  <label className="form-check-label" htmlFor="IsActiveCheckbox">
+    Active
+  </label>
+</div>
+
+
+    
                         </div>
-                          <div className="col-md-4 mb-4">
+                          <div className="text-end">
                             <button type="submit" className="btn btn-success">Submit</button>
                         </div>
                        

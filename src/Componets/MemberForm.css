@@ -39,6 +39,12 @@ body {
   margin-bottom: 2px;
 }
 
+.form-group {
+  /* margin-bottom: 2px;  adjust spacing between fields */
+  row-gap: 1px;
+}
+
+
 .form-control {
   background-color: #fff !important;
   border: 1px solid #ccc !important;
@@ -75,7 +81,7 @@ body {
 }
 
 .row-cols-md-2 > * {
-  margin-bottom: 6px;  /* tighter spacing between fields */
+  margin-bottom: 0px;  /* tighter spacing between fields */
 }
 
 details summary {
@@ -83,4 +89,21 @@ details summary {
   font-weight: 500;
   font-size: 14px;
   color: #173a60;
+}
+
+
+.custom-input {
+  height: 32px;
+  width: 550px;
+  padding: 4px 10px;
+  font-size: 14px;
+  margin-bottom: 12px; /* 👈 yeh line spacing ke liye */
+}
+
+
+
+
+.fixed-label {
+  display: inline-block;
+  width: 140px; /* Adjust as needed */
 }

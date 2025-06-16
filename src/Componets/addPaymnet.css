@@ -1,0 +1,13 @@
+/* Step 1: Sidebar ke baad wali main container */
+.main-content {
+  margin-left: 250px; /* sidebar width ke hisaab se */
+  padding: 20px;
+  width: calc(100% - 250px); /* sidebar ke baad bacha hua space */
+}
+
+/* Step 2: Form card ko full width dena */
+.card {
+  width: 100%;
+  max-width: none; /* agar koi max-width lagi hai to hata do */
+  box-sizing: border-box;
+}
