@@ -1,0 +1,23 @@
+.create-user-wrapper {
+  padding: 20px;
+}
+
+/* Optional - Styling for card if needed */
+.card {
+  border-radius: 10px;
+}
+
+.card-header h4 {
+  margin: 0;
+}
+
+/* Make sure the card looks better on small screens */
+@media (max-width: 576px) {
+  .card-header h4 {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}
